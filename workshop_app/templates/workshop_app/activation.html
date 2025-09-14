@@ -1,76 +1,99 @@
 {% extends 'workshop_app/base.html' %}
 
 {% block title %}
-    Awaiting activation
+Awaiting activation
 {% endblock %}
 
 {% block header %}
-    <nav class="navbar navbar-default navbar-dark bg-dark">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand text-white" href="/">
-                    FOSSEE Workshops
-                </a>
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-                {% if request.user.profile.is_email_verified %}
-                    <li><a href="{% url 'workshop_app:view_profile' %}"><span class="glyphicon glyphicon-user"></span>
-                        Profile</a></li>
-
-                    <li><a href="{% url 'workshop_app:logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
-                    </li>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
-{% endblock %}
-
-{% block extra %}
-
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" href="/">FOSSEE Workshops</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="main-nav">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        {% if user.is_authenticated and request.user.profile.is_email_verified %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'workshop_app:view_profile' %}">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'workshop_app:logout' %}">Logout</a>
+          </li>
+        {% else %}
+            {# Optionally show Login/Register if the user isn't fully authenticated #}
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
 {% endblock %}
 
 {% block content %}
-    {% if status == '2' %}
-        <div class="container">
-            <div class="jumbotron">
-                <p> Your email is already verified, Click
-                    <a href="{% url 'workshop_app:index' %}">here</a>
-                </p>
-            </div>
-        </div>
-    {% elif status == '1' %}
-        <script type="text/javascript">
-            window.setTimeout(function () {
-                location.href = "{% url 'workshop_app:register' %}"
-            }, 3000);
-        </script>
-        <div class="container">
-            <div class="jumbotron">
-                <p> Your activation has expired please register again</p>
-            </div>
-        </div>
-    {% elif status == '0' %}
-        <div class="container">
-            <div class="jumbotron">
-                <p> Your account has been activated. Click
-                    <a href="{% url 'workshop_app:index' %}">here</a>
-                </p>
-            </div>
-        </div>
-    {% else %}
-        <script type="text/javascript">
-            window.setTimeout(function () {
-                location.href = "{% url 'workshop_app:logout' %}"
-            }, 5000);
-        </script>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-7 col-xl-6">
+      <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-4 p-md-5 text-center">
 
-        <div class="container">
-            <div class="jumbotron">
-                <h1>Activation Awaiting</h1>
-                <p>The Activation Link has been sent to your email. The link expires in <strong>24hours</strong> from
-                    the date of registration. You will be logged out automatically
-                </p>
+          {# --- Status: Activation Link Sent (Default) --- #}
+          {% if not status or status == '3' %}
+            <div class="mb-4 text-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-envelope-check" viewBox="0 0 16 16">
+                <path d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v2.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2H2Z"/>
+                <path d="M8 8.414l7.757 7.757 1.414-1.414L9.414 7l7.757-7.757-1.414-1.414L8 5.586 1.646-1.772.232-.358 8 7.414Zm1.25.25a.5.5 0 0 0-.707 0L8 8.914l-1.95-1.95a.5.5 0 0 0-.707.707L7.293 9.621l-1.95 1.95a.5.5 0 1 0 .707.707L8 10.328l1.95 1.95a.5.5 0 0 0 .707-.707L8.707 9.621l1.95-1.95a.5.5 0 0 0 0-.707Z"/>
+              </svg>
             </div>
+            <h2 class="fw-bold mb-3">Check Your Inbox</h2>
+            <p class="text-muted mb-4">
+              An activation link has been sent to your email. The link expires in <strong>24 hours</strong>. You will be logged out automatically shortly.
+            </p>
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <script>
+              window.setTimeout(() => { location.href = "{% url 'workshop_app:logout' %}"; }, 5000);
+            </script>
+          
+          {# --- Status: Activated Successfully --- #}
+          {% elif status == '0' %}
+            <div class="mb-4 text-success">
+              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>
+            </div>
+            <h2 class="fw-bold mb-3">Account Activated!</h2>
+            <p class="text-muted mb-4">Your account is now active. Click below to continue.</p>
+            <div class="d-grid">
+              <a href="{% url 'workshop_app:index' %}" class="btn btn-primary btn-lg">Continue</a>
+            </div>
+
+          {# --- Status: Activation Expired --- #}
+          {% elif status == '1' %}
+            <div class="mb-4 text-warning">
+              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16"><path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.798a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.986 7.986 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-1.018.932l-.516-.845c.13-.076.255-.156.373-.24zM8 1a7 7 0 1 0 4.95 11.95A7 7 0 0 0 8 1z"/><path d="M5.553 5.359A.5.5 0 0 1 6 5h1.5a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5V5.36a.5.5 0 0 1 .553-.44z"/><path d="M8 3.5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z"/></svg>
+            </div>
+            <h2 class="fw-bold mb-3">Activation Expired</h2>
+            <p class="text-muted mb-4">Your activation link has expired. Please register again. You will be redirected shortly.</p>
+            <div class="spinner-border text-warning" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <script>
+              window.setTimeout(() => { location.href = "{% url 'workshop_app:register' %}"; }, 3000);
+            </script>
+
+          {# --- Status: Already Verified --- #}
+          {% elif status == '2' %}
+             <div class="mb-4 text-info">
+              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>
+            </div>
+            <h2 class="fw-bold mb-3">Already Verified</h2>
+            <p class="text-muted mb-4">Your email address has already been verified.</p>
+            <div class="d-grid">
+              <a href="{% url 'workshop_app:index' %}" class="btn btn-primary btn-lg">Continue</a>
+            </div>
+          {% endif %}
         </div>
-    {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -8,10 +8,16 @@
 	{% block content %}
 		<div class="container" align="center">
 			<br>
-			<h3>You have logged out successfully.</h3>
-			<h4>If you want to login again please
-				<a href="/">click here</a>
-			</h4>
+			 <h2 class="fw-bold mb-3">Logged Out Successfully</h2>
+                    <p class="text-muted mb-4">
+                        Thank you for visiting. You can log back in at any time.
+                    </p>
+
+                    <div class="d-grid">
+                        <a href="{% url 'workshop_app:index' %}" class="btn btn-primary btn-lg">
+                            Log In Again
+                        </a>
+                    </div>
 			<br>
 		</div>
 

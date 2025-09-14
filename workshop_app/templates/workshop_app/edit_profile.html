@@ -1,20 +1,35 @@
 {% extends "workshop_app/base.html" %}
 
-{% block title %}
-	Edit Profile
-{% endblock %}
+{% block title %}Edit Profile{% endblock %}
 
 {% block content %}
-  <div class="container">
-    <form action="{{URL_ROOT}}/edit_profile/" method="post" >
-    {% csrf_token %}
-      <center>
-        <table class="table table-bordered">
-          {{ form.as_table }}
-        </table>
-      </center>
-      <br>
-        <button class="btn btn-primary pull-right" type="submit">Save Profile</button>
-    </form>
-  </div>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+
+            <!-- A simple card provides a clean container for the form -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h3 class="mb-0">Edit Profile</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <!-- The table is now inside the card for better structure -->
+                        <table class="table table-bordered">
+                            {{ form.as_table }}
+                        </table>                        
+                        <hr>
+                        <!-- Modern way to align buttons to the right -->
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary" type="submit">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 {% endblock %}
