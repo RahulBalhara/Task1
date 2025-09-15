@@ -42,6 +42,3 @@ db.sqlite3
 #Vim
 *.swp
 
-#images/gif
-*.png
-*.gif
