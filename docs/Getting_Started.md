@@ -3,7 +3,7 @@
 ### Follow below given Steps to get started
 > __NOTE__: Use Python3 
 1. Clone this repo.
-    > git clone https://github.com/FOSSEE/workshop_booking.git
+    > git clone https://github.com/RahulBalhara/Task1.git
 
 2. Create a virtual environment and install all the required packages from requirements.txt
     > pip install -r requirements.txt 
