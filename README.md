@@ -13,10 +13,10 @@ This project enhances the user interface and experience of the existing FOSSEE W
 
 | Page | Before | After |
 |------|--------|-------|
-| Homepage | ![Before Homepage](../Screenshots/Before_Home.png) | ![After Homepage](../Screenshots/After_Home.png) |
-| Password setup | ![Before Password Setup](../Screenshots/Before_password.png) | ![After Password Setup](../Screenshots/After_password.png) |
-| Registration form | ![Before Registration Form](../Screenshots/Before_Registration.png) | ![After Registration Form](../Screenshots/After_Registration.png) |
-| Statistics | ![Before Statistics](../Screenshots/Before_Stats.png) | ![After Statistics](../Screenshots/After_Stats.png) |
+| Homepage | ![Before Homepage](Screenshots/Before_Home.png) | ![After Homepage](Screenshots/After_Home.png) |
+| Password setup | ![Before Password setup](Screenshots/Before_password.png) | ![After Password setup](Screenshots/After_password.png) |
+| Registration form| ![Before Registration from](Screenshots/Before_Registration.png) | ![After Registration from](Screenshots/After_Registration.png) |
+| Statistics| ![ Before Statistics](Screenshots/Before_Stats.png) | ![After Statistics](Screenshots/After_Stats.png) |
 ## 🛠️ Built With
 
 *   [Bootstrap 5](https://getbootstrap.com/) - Frontend framework for responsive design
@@ -99,4 +99,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Rahul Balhara - [rahulbalhara821@gmail.com](mailto:rahulbalhara821@gmail.com)
 
-Project Link: [https://github.com/RahulBalhara/Task1.git](https://github.com/RahulBalhara/Task1.git)m
+Project Link: [https://github.com/RahulBalhara/Task1.git](https://github.com/RahulBalhara/Task1.git)
